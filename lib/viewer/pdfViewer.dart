@@ -101,7 +101,8 @@ class _PdfViewerState extends State<PdfViewer> {
 
 
   void HandlePickedFile()async{
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom,
+      allowedExtensions: ['pdf'],);
 
     if (result != null) {
       File file = File(result.files.single.path!);
@@ -125,76 +126,77 @@ class _PdfViewerState extends State<PdfViewer> {
 
 
     return  Scaffold(
-      appBar: AppBar(
-        title: const Text('PDF Viewer'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () async {
+        appBar: AppBar(
+          title: const Text('PDF Viewer'),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () async {
 
-              if (selectedTextLines != null) {
-                print(selectedTextLines);
-                try {
+                if (selectedTextLines != null) {
+                  print(selectedTextLines);
+                  try {
 
 
-                  if (kDebugMode) {
+                    if (kDebugMode) {
 
-                    _showToast(context, selectedTextLines!);
+                      _showToast(context, selectedTextLines!);
 
+                    }
+                  } catch (e) {
+                    if (kDebugMode) {
+                      print(e);
+                    }
                   }
-                } catch (e) {
-                  if (kDebugMode) {
-                    print(e);
-                  }
+
+
                 }
-
-
-              }
-            },
-          ),
-        ],
-      ),
-
-      body: isFilePicked? Container(
-      
-        child: SfPdfViewer.memory(
-          bytes,
-          pageSpacing: 1,
-          key: _pdfViewerKey,
-          controller: pdfViewerController,
-          onTextSelectionChanged: (PdfTextSelectionChangedDetails text){
-            String? Text= text.selectedText;
-            selectedTextLines=Text;
-
-          },
-
-          interactionMode: PdfInteractionMode.selection,
-          canShowHyperlinkDialog: false,
-          canShowPageLoadingIndicator: false,
-          canShowPaginationDialog: false,
-          enableDocumentLinkAnnotation: false,
-          initialScrollOffset: Offset.infinite,
-
-
-
-        ),
-      )
-          : Center(
-            heightFactor: 10,
-            widthFactor: 10,
-            child: ElevatedButton(
-
-              child: Text("Select .pdf file"),
-              onPressed: () {
-
-                HandlePickedFile();
-
-
               },
             ),
-          ),
+          ],
+        ),
 
-      );
+        body: isFilePicked? Container(
+
+          child: SfPdfViewer.memory(
+            bytes,
+            pageSpacing: 1,
+            key: _pdfViewerKey,
+            controller: pdfViewerController,
+            onTextSelectionChanged: (PdfTextSelectionChangedDetails text){
+              String? Text= text.selectedText;
+              selectedTextLines=Text;
+
+            },
+
+            interactionMode: PdfInteractionMode.selection,
+            canShowHyperlinkDialog: false,
+            canShowPageLoadingIndicator: false,
+            canShowPaginationDialog: false,
+            enableDocumentLinkAnnotation: false,
+            initialScrollOffset: Offset.infinite,
+
+
+
+          ),
+        )
+            : Center(
+              heightFactor: 10,
+              widthFactor: 10,
+              child: ElevatedButton(
+
+                child: Text("Select .pdf file"),
+                onPressed: () {
+
+                  HandlePickedFile();
+
+
+                },
+              ),
+            ),
+
+        
+    );
 
 
   }

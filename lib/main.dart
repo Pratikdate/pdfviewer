@@ -4,25 +4,38 @@ import 'package:flutter/material.dart';
 import 'package:pdfviewer/viewer/pdfViewer.dart';
 
 void main() {
-  runApp( const MyApp());
+  runApp(  MyApp());
 }
 
-
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+class _MyHomePageState extends State<MyHomePage> {
+  @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 2000),
+    Timer(Duration(seconds: 3),
             ()=>Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
                 (context) =>
-                const PdfViewer()
+                PdfViewer()
             )
         )
     );
@@ -31,7 +44,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.white,
-        child: Image.asset("assets/icon.jpg")
+        child:Image.asset("assets/icon.jpg")
     );
   }
 }
