@@ -184,7 +184,6 @@ class _PdfViewerState extends State<PdfViewer> {
               heightFactor: 10,
               widthFactor: 10,
               child: ElevatedButton(
-
                 child: Text("Select .pdf file"),
                 onPressed: () {
 
@@ -195,7 +194,7 @@ class _PdfViewerState extends State<PdfViewer> {
               ),
             ),
 
-        
+
     );
 
 
